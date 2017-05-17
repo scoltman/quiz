@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <h2>Argument Quiz</h2>
+
+        <div class="count">
+
+        </div>
+        <div id="quiz"></div>
+        <div class="answer">
+        </div>
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script type="text/javascript">
+        var philargs = [
+          {
+            'argument' : [
+              { 'text' : 'Lilly is Patrick’s sister',
+                'type' : 'Premise'
+
+              },
+              {
+                'text' : 'Patrick is Sam’s brother',
+                'type' : 'Premise'
+              },
+              {
+                'text' : 'Therefore, Lilly is Sam’s sister',
+                'type' : 'Conclusion'
+              }
+            ],
+            'status' : 'Sound'
+          },
+          {
+            'argument' : [
+              { 'text' : 'If there is a purple elephant in the hall, then I am a giant turkey',
+                'type' : 'Premise'
+
+              },
+              {
+                'text' : 'There is a purple elephant in the hall',
+                'type' : 'Premise'
+              },
+              {
+                'text' : 'Therefore, I’m a giant turkey',
+                'type' : 'Conclusion'
+              }
+            ],
+            'status' : 'Valid'
+          },
+          {
+            'argument' : [
+              { 'text' : 'I have a very strong feeling that my lottery ticket is the winning ticket',
+                'type' : 'Premise'
+
+              },
+              {
+                'text' : 'So, I’m quite confident I will win a lot of money tonight',
+                'type' : 'Conclusion'
+              }
+            ],
+            'status' : 'Invalid'
+          },
+          {
+            'argument' : [
+              { 'text' : 'I have a friend that speaks French and English',
+                'type' : 'Premise'
+              },
+              { 'text' : 'My friend is a human',
+                'type' : 'Premise'
+              },
+              {
+                'text' : 'So, at least one human speaks two languages',
+                'type' : 'Conclusion'
+              }
+            ],
+            'status' : 'Sound'
+          },
+          {
+            'argument' : [
+              { 'text' : 'Bees buzz as they fly around',
+                'type' : 'Premise'
+              },
+              { 'text' : 'I can here a buzzing sound',
+                'type' : 'Premise'
+              },
+              {
+                'text' : 'Therefore, there must be a bee nearby',
+                'type' : 'Conclusion'
+              }
+            ],
+            'status' : 'Invalid'
+          },
+          {
+            'argument' : [
+              { 'text' : 'Bees have sharp stingers',
+                'type' : 'Premise'
+              },
+              {
+                'text' : 'Therefore, they can sting you',
+                'type' : 'Conclusion'
+              }
+            ],
+            'status' : 'Sound'
+          },
+          {
+            'argument' : [
+              { 'text' : 'There is a girl called Sarah with only one eye',
+                'type' : 'Premise'
+              },
+              { 'text' : 'Sarah lives next door to me',
+                'type' : 'Premise'
+              },
+              {
+                'text' : 'Hence, my neighbour has only one eye',
+                'type' : 'Conclusion'
+              }
+            ],
+            'status' : 'Valid'
+          },
+          {
+            'argument' : [
+              { 'text' : 'The earth is a giant round thing',
+                'type' : 'Premise'
+              },
+              { 'text' : 'All objects sitting on round things will fall off',
+                'type' : 'Premise'
+              },
+              {
+                'text' : 'Therefore, we are all going to fall off the earth',
+                'type' : 'Conclusion'
+              }
+            ],
+            'status' : 'Valid'
+          },
+          {
+            'argument' : [
+              { 'text' : 'John is an only child',
+                'type' : 'Premise'
+              },
+              { 'text' : 'John is not an only child',
+                'type' : 'Premise'
+              },
+              {
+                'text' : 'Therefore, the moon is made of cheese',
+                'type' : 'Conclusion'
+              }
+            ],
+            'status' : 'Valid'
+          },
+          {
+            'argument' : [
+              { 'text' : 'Tom is happy only if he is playing guitar',
+                'type' : 'Premise'
+              },
+              { 'text' : 'Tom is not playing guitar',
+                'type' : 'Premise'
+              },
+              {
+                'text' : 'So, Tom is not happy',
+                'type' : 'Conclusion'
+              }
+            ],
+            'status' : 'Sound'
+          },
+          {
+            'argument' : [
+              { 'text' : 'Tom said that he didn’t go to Samantha’s party',
+                'type' : 'Premise'
+              },
+              { 'text' : 'No one at Samantha’s party saw Tom there',
+                'type' : 'Premise'
+              },
+              {
+                'text' : 'Therefore, Tom did not attend Samantha’s party.',
+                'type' : 'Conclusion'
+              }
+            ],
+            'status' : 'Invalid'
+          },
+          {
+            'argument' : [
+              { 'text' : 'My coat is either in the kitchen or the hall',
+                'type' : 'Premise'
+              },
+              { 'text' : 'My coat is not in the kitchen',
+                'type' : 'Premise'
+              },
+              {
+                'text' : 'So, My coat is in the hall',
+                'type' : 'Conclusion'
+              }
+            ],
+            'status' : 'Sound'
+          },
+          {
+            'argument' : [
+              { 'text' : 'If all dogs are mammals, then all dogs are reptiles',
+                'type' : 'Premise'
+              },
+              { 'text' : 'All dogs are mammals',
+                'type' : 'Premise'
+              },
+              {
+                'text' : 'Therefore, all dogs are reptiles',
+                'type' : 'Conclusion'
+              }
+            ],
+            'status' : 'Valid'
+          },
+          {
+            'argument' : [
+              { 'text' : 'If all dogs are mammals, then all dogs are animals',
+                'type' : 'Premise'
+              },
+              { 'text' : 'All dogs are animals',
+                'type' : 'Premise'
+              },
+              {
+                'text' : 'Therefore, all dogs are mammals',
+                'type' : 'Conclusion'
+              }
+            ],
+            'status' : 'Invalid'
+          },
+          {
+            'argument' : [
+              { 'text' : 'It’s often good to give to charity',
+                'type' : 'Premise'
+              },
+              { 'text' : 'If it’s often good to give to charity, then the Earth is round',
+                'type' : 'Premise'
+              },
+              {
+                'text' : 'Therefore, the Earth is round',
+                'type' : 'Conclusion'
+              }
+            ],
+            'status' : 'Sound'
+          },
+          {
+            'argument' : [
+              { 'text' : 'Murder is always wrong',
+                'type' : 'Premise'
+              },
+              { 'text' : 'Sometimes murder isn’t wrong',
+                'type' : 'Premise'
+              },
+              {
+                'text' : 'Therefore, the death penalty should be illegal',
+                'type' : 'Conclusion'
+              }
+            ],
+            'status' : 'Valid'
+          },
+          {
+            'argument' : [
+              { 'text' : 'We should try to keep an open mind',
+                'type' : 'Premise'
+              },
+              {
+                'text' : 'Therefore, either rocks exist or rocks don’t exist',
+                'type' : 'Conclusion'
+              }
+            ],
+            'status' : 'Sound'
+          },
+          {
+            'argument' : [
+              { 'text' : 'All cats are mammals',
+                'type' : 'Premise'
+              },
+              {
+                'text' : 'Therefore, some cats are mammals',
+                'type' : 'Conclusion'
+              }
+            ],
+            'status' : 'Invalid'
+          },
+          {
+            'argument' : [
+              { 'text' : 'Sally is Tall',
+                'type' : 'Premise'
+              },
+              { 'text' : 'Sally is a girl',
+                'type' : 'Premise'
+              },
+              {
+                'text' : 'Therefore, Sally is a tall girl',
+                'type' : 'Conclusion'
+              }
+            ],
+            'status' : 'Sound'
+          },
+          {
+            'argument' : [
+              { 'text' : 'All people named Lilly like flowers',
+                'type' : 'Premise'
+              },
+              { 'text' : 'I know a specific person called Lilly',
+                'type' : 'Premise'
+              },
+              {
+                'text' : 'Therefore, she is likes flowers',
+                'type' : 'Conclusion'
+              }
+            ],
+            'status' : 'Valid'
+          },
+          {
+            'argument' : [
+              { 'text' : 'Butter is made from milk',
+                'type' : 'Premise'
+              },
+              { 'text' : 'Honey can be bought at the shop',
+                'type' : 'Premise'
+              },
+              {
+                'text' : 'Therefore, I own a pet snake',
+                'type' : 'Conclusion'
+              }
+            ],
+            'status' : 'Invalid'
+          },
+          {
+            'argument' : [
+              { 'text' : 'All men are mortal',
+                'type' : 'Premise'
+              },
+              { 'text' : 'Socrates is a man',
+                'type' : 'Premise'
+              },
+              {
+                'text' : 'So, Socrates is a mortal',
+                'type' : 'Conclusion'
+              }
+            ],
+            'status' : 'Invalid'
+          },
+          {
+            'argument' : [
+              { 'text' : 'All students in this class are girls',
+                'type' : 'Premise'
+              },
+              { 'text' : 'Matilda is in this class',
+                'type' : 'Premise'
+              },
+              {
+                'text' : 'Therefore, Matilda is a girl',
+                'type' : 'Conclusion'
+              }
+            ],
+            'status' : 'Invalid'
+          },
+          {
+            'argument' : [
+              { 'text' : 'The teacher drank coffee this morning',
+                'type' : 'Premise'
+              },
+              {
+                'text' : 'Hence, Simon drank coffee this morning',
+                'type' : 'Conclusion'
+              }
+            ],
+            'status' : 'Sound'
+          },
+          {
+            'argument' : [
+              { 'text' : 'If there is a hedgehog in my gas tank, then my car will not start',
+                'type' : 'Premise'
+              },
+              { 'text' : 'My car will not start',
+                'type' : 'Premise'
+              },
+              {
+                'text' : 'Hence, there must be a hedgehog in my gas tank.',
+                'type' : 'Conclusion'
+              }
+            ],
+            'status' : 'Invalid'
+          },
+          {
+            'argument' : [
+              { 'text' : 'Either Athens is in Greece or it is in Turkey',
+                'type' : 'Premise'
+              },
+              { 'text' : 'Athens is in Greece',
+                'type' : 'Premise'
+              },
+              {
+                'text' : 'Therefore, Athens is in Turkey',
+                'type' : 'Conclusion'
+              }
+            ],
+            'status' : 'Invalid'
+          },
+          {
+            'argument' : [
+              { 'text' : 'If the moon is made of green cheese, then cows jump over it',
+                'type' : 'Premise'
+              },
+              { 'text' : 'The moon is made of green cheese',
+                'type' : 'Premise'
+              },
+              {
+                'text' : 'Therefore, cows jump over the moon',
+                'type' : 'Conclusion'
+              }
+            ],
+            'status' : 'Valid'
+          },
+          {
+            'argument' : [
+              { 'text' : 'If your teacher is Simon, then your teacher likes Philosophy',
+                'type' : 'Premise'
+              },
+              { 'text' : 'Your teacher is simon',
+                'type' : 'Premise'
+              },
+              {
+                'text' : 'Therefore, Your teacher likes Philosophy',
+                'type' : 'Conclusion'
+              }
+            ],
+            'status' : 'Sound'
+          },
+          {
+            'argument' : [
+              { 'text' : 'All Dolphin come from Venus',
+                'type' : 'Premise'
+              },
+              { 'text' : 'I am a Dolphin',
+                'type' : 'Premise'
+              },
+              {
+                'text' : 'So, I came from Venus',
+                'type' : 'Conclusion'
+              }
+            ],
+            'status' : 'Valid'
+          },
+          {
+            'argument' : [
+              { 'text' : 'If I drink any water I will turn into a fish',
+                'type' : 'Premise'
+              },
+              { 'text' : 'I drink lots of water',
+                'type' : 'Premise'
+              },
+              {
+                'text' : 'Therefore, I will turn into a fish',
+                'type' : 'Conclusion'
+              }
+            ],
+            'status' : 'Valid'
+          }
+        ];
+
+        </script>
+        <script type="text/javascript">
+        $(function(){
+          var quiz = $('#quiz');
+          var backupargs = philargs.slice(0);
+          var totalQuestions = backupargs.length;
+          var noAnswered = 0;
+          var currentQuestion;
+          var points = 0;
+          var answerArea = $('.answer');
+
+          function getRandomType(){
+            var index = Math.floor(Math.random() * (3 - 1 + 1)) + 1;
+            return types[index - 1];
+          }
+          function updateCount(){
+                    noAnswered++;
+
+            $('.count').text(noAnswered + '/' + totalQuestions);
+          }
+          function getQuestion(){
+              currentQuestion = philargs.pop();
+              if(currentQuestion){
+                renderQuestion();
+                updateCount();
+              }
+              else {
+                renderResults();
+              }
+          }
+          function renderResults(){
+            $('#quiz').html('<div class="finalscore">You scored ' + points + ' correct answers out of ' + totalQuestions + '</div><button class="restart">Try Again?</button>');
+            $('.answer').html('');
+            $('.count').html('');
+            $('.restart').on('click', function(){
+              philargs = backupargs.slice(0);
+              points = 0;
+              noAnswered = 0;
+              getQuestion();
+            })
+          }
+
+          function renderQuestion(){
+            var html = '';
+            var answerhtml = '';
+            var argument = currentQuestion.argument;
+            for (var i = 0; i < argument.length; ++i) {
+              if(argument[i].text){
+                html += '<div>' + argument[i].text + '</div>';
+              }
+            }
+            answerhtml += '<button name="Invalid">Invalid</button>';
+            answerhtml += '<button name="Valid">Valid</button>';
+            answerhtml += '<button name="Sound">Valid and Sound</button>';
+            $('.answer').html(answerhtml);
+            $('#quiz').html(html);
+          }
+
+          answerArea.on('click', function(e, el){
+            if(currentQuestion.status == $(e.target).attr('name')){
+              points++;
+            }
+            getQuestion();
+
+          });
+
+          getQuestion();
+        });
+        </script>
+        <style media="screen">
+          h1 {
+            display: none !important;
+          }
+          .count{
+            float: right;
+        font-size: 22px;
+        font-weight: bold;
+          }
+          #quiz {
+            height: 137px;
+        font-size: 24px;
+          }
+          .answer button {
+                margin-right: 20px;
+          }
+        </style>
+
+  </body>
+</html>
